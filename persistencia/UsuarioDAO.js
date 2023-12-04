@@ -58,9 +58,9 @@ export default class UsuarioDAO {
         const conexao = await conectarBanco();
         const [linhas, campos] = await conexao.execute(sql, parametros);
         const registros = linhas.reduce((grupos, item) => {
-            const grupo = grupos[item.id_usuario] || [];
+            const grupo = grupos[item.id] || [];
             grupo.push(item);
-            grupos[item.id_usuario] = grupo;
+            grupos[item.id] = grupo;
             return grupos;
         }, {});
 
