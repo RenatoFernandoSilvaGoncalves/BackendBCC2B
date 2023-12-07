@@ -42,7 +42,7 @@ export default class MensagemCTRL {
             const dados = req.body;
             const id = dados.id;
             const lida = dados.lida;
-            if (id && lida) {
+            if (id && typeof(lida) == 'boolean') {
                 const mensagem = new Mensagem(id,lida);
                 mensagem.alterar().then(() => {
                     res.status(200).json({
