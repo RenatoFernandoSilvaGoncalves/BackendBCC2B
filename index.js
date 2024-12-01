@@ -2,8 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import rotaUsuario from './rotas/rotaUsuario.js';
 import rotaMensagens  from './rotas/rotaMensagens.js';
-import rota from './rotas/rotaUsuario.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const host='0.0.0.0';
 const port = 3000;

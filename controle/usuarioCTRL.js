@@ -7,8 +7,9 @@ export default class UsuarioCTRL {
             const nickname = dados.nickname;
             const urlAvatar = dados.urlAvatar;
             const dataIngresso = new Date();
-            if (nickname && urlAvatar && dataIngresso) {
-                const usuario = new Usuario(0, nickname, urlAvatar, dataIngresso);
+            const senha = dados.senha;
+            if (nickname && urlAvatar && dataIngresso && senha) {
+                const usuario = new Usuario(0, nickname, urlAvatar, dataIngresso, senha);
                 usuario.incluir().then(() => {
                     res.status(200).json({
                         status: true,
@@ -26,7 +27,7 @@ export default class UsuarioCTRL {
             else {
                 res.status(400).json({
                     status: false,
-                    mensagem: 'Por favor, informe todos os dados do usuário (nickname, urlAvatar)!'
+                    mensagem: 'Por favor, informe todos os dados do usuário (nickname, urlAvatar, dataIngresso, senha)!'
                 });
             }
 
@@ -47,8 +48,9 @@ export default class UsuarioCTRL {
             const nickname = dados.nickname;
             const urlAvatar = dados.urlAvatar;
             const dataIngresso = new Date();
-            if (id && nickname && urlAvatar && dataIngresso) {
-                const usuario = new Usuario(id, nickname, urlAvatar, dataIngresso);
+            const senha = dados.senha;
+            if (id && nickname && urlAvatar && dataIngresso && senha) {
+                const usuario = new Usuario(id, nickname, urlAvatar, dataIngresso, senha);
                 usuario.alterar().then(() => {
                     res.status(200).json({
                         status: true,
@@ -65,7 +67,7 @@ export default class UsuarioCTRL {
             else {
                 res.status(400).json({
                     status: false,
-                    mensagem: 'Por favor, informe todos os dados do usuário (id,nickname, urlAvatar)!'
+                    mensagem: 'Por favor, informe todos os dados do usuário (id,nickname, urlAvatar, dataIngresso, senha)!'
                 });
             }
 
@@ -83,8 +85,9 @@ export default class UsuarioCTRL {
         if (req.method == 'DELETE' && req.is('application/json')) {
             const dados = req.body;
             const id = dados.id;
+            const senha = dados.senha;
             if (id) {
-                const usuario = new Usuario(id);
+                const usuario = new Usuario(id,'','',null,senha);
                 usuario.excluir().then(() => {
                     res.status(200).json({
                         status: true,
@@ -134,6 +137,44 @@ export default class UsuarioCTRL {
                     mensagem: "Erro ao consultar os usuários: " + erro.message
                 });
             });
+        }
+        else {
+            res.status(400).json({
+                status: false,
+                mensagem: 'Requisição inválida!'
+            });
+        }
+    }
+
+    verificarSenha(req, res) {
+        res.type('application/json');
+        if (req.method == 'POST' && req.is('application/json')) {
+            const dados = req.body;
+            const nickname = dados.nickname;
+            const senha = dados.senha;
+            if (nickname && senha) {
+                const usuario = new Usuario(0,nickname,'',null,senha);
+                usuario.verificarSenha().then((retorno) => {
+                    res.status(200).json({
+                        status: true,
+                        senhaCorreta: retorno,
+                        mensagem: 'Senha verificada com sucesso!'
+                    });
+                })
+                .catch((erro) => {
+                    res.status(400).json({
+                        status: false,
+                        mensagem: "Erro ao verificar a senha: " + erro.message
+                    });
+                });
+            }
+            else {
+                res.status(400).json({
+                    status: false,
+                    mensagem: 'Por favor, informe todos os dados do usuário (nickname, senha)!'
+                });
+            }
+
         }
         else {
             res.status(400).json({

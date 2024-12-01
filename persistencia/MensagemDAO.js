@@ -3,6 +3,28 @@ import Usuario from "../modelo/usuario.js";
 import conectarBanco, { liberarConexao } from "./conexao.js";
 export default class MensagemDAO {
 
+    constructor() {
+        this.init();
+    }
+    async init() {
+        try {
+            const sql = `CREATE TABLE IF NOT EXISTS mensagens (
+                         id INT NOT NULL AUTO_INCREMENT, 
+                         dataHora DATETIME,
+                         lida BOOLEAN, 
+                         mensagem VARCHAR(250), 
+                         id_usuario INT NOT NULL,
+                         CONSTRAINT PK_MENSAGENS PRIMARY KEY (id),
+                         CONSTRAINT FK_MENSAGENS_USUARIOS FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+                         )`;
+            const conexao = await conectarBanco();
+            const resultado = await conexao.execute(sql);
+            liberarConexao(conexao);
+            console.log("Tabela mensagens iniciada com sucesso!");
+        } catch (erro) {
+            console.log("Não foi possível iniciar a tabela mensagens: " + erro);
+        }
+    }
     async gravar(mensagem) {
         if (mensagem instanceof Mensagem) {
             const sql = "INSERT INTO mensagens(dataHora, lida, mensagem, id_usuario) VALUES (STR_TO_DATE(?,'%d/%m/%Y, %H:%i:%s'), ?, ?, ?)";
@@ -16,7 +38,7 @@ export default class MensagemDAO {
 
     async alterar(mensagem) {
         if (mensagem instanceof Mensagem) {
-            const sql = "UPDATE mensagens SET lida = ? WHERE id = ?";
+            const sql = "UPDATE mensagens SET lida = ? WHERE id = ? ";
             const dados = [mensagem.lida, mensagem.id];
             const conexao = await conectarBanco();
             await conexao.execute(sql, dados);

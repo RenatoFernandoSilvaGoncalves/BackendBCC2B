@@ -9,6 +9,7 @@ rota.get("/", usuarioCTRL.consultar)
 .post("/", usuarioCTRL.gravar)
 .put("/", usuarioCTRL.alterar)
 .patch("/", usuarioCTRL.alterar)
-.delete("/", usuarioCTRL.excluir);
+.delete("/", usuarioCTRL.excluir)
+.post('/verificarSenha', usuarioCTRL.verificarSenha);
 
 export default rota;

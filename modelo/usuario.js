@@ -5,13 +5,15 @@ export default class Usuario{
     #nickname;
     #urlAvatar;
     #dataIngresso;
+    #senha;
     #mensagens = [];
 
-    constructor(id, nickname, urlAvatar, dataIngresso, mensagens=[]){
+    constructor(id, nickname, urlAvatar, dataIngresso, senha, mensagens=[]){
         this.#id = id;
         this.#nickname = nickname;
         this.#urlAvatar = urlAvatar;
         this.#dataIngresso = dataIngresso;
+        this.#senha = senha;
         this.#mensagens = mensagens;
     }
 
@@ -45,6 +47,14 @@ export default class Usuario{
 
     set dataIngresso(dataIngresso){
         this.#dataIngresso = dataIngresso;
+    }
+
+    get senha(){
+        return this.#senha;
+    }
+
+    set senha(senha){
+        this.#senha = senha;
     }
 
     get mensagens(){
@@ -87,5 +97,10 @@ export default class Usuario{
     async consultar(termo){
         const usuarioDAO = new UsuarioDAO();
         return await usuarioDAO.consultar(termo);
+    }
+
+    async verificarSenha(){
+        const usuarioDAO = new UsuarioDAO();
+        return await usuarioDAO.verificarSenha(this.nickname, this.senha);
     }
 }

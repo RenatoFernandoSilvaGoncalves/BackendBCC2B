@@ -20,11 +20,11 @@ https://backend-bcc-2-b.vercel.app/usuario/1  ou https://backend-bcc-2-b.vercel.
             "id": 1,
             "nickname": "aluno10",
             "urlAvatar": "https://thumbs.dreamstime.com/z/%C3%ADcone-do-sinal-do-usu%C3%A1rio-s%C3%ADmbolo-da-pessoa-avatar-humano-84527747.jpg?w=768",
-            "dataIngresso": "03/12/2023",
+            "dataIngresso": "01/12/2024",
             "mensagens": [
                 {
                     "id": 1,
-                    "dataHora": "03/12/2023, 10:40:32",
+                    "dataHora": "01/12/2024, 10:40:32",
                     "lida": false,
                     "mensagem": "Que horas começa a prova?",
                     "usuario": {}
@@ -41,7 +41,8 @@ Para incluir um usuário será preciso enviar enviar um JSON no seguinte formato
 ```json
 {
     "nickname":"aprovado",
-    "urlAvatar":"url da imagem do usuário"
+    "urlAvatar":"url da imagem do usuário",
+    "senha":"123456"
 }
 ```
 
@@ -61,10 +62,14 @@ Para alterar um usuário será preciso enviar enviar um JSON no seguinte formato
 {
     "id":7,
     "nickname":"aprovado",
-    "urlAvatar":"url da imagem do usuário"
+    "urlAvatar":"url da imagem do usuário",
+    "senha":"123456"
 }
 ```
-**Obs:** Não será possível alterar o campo dataIngresso 
+**Obs:** Não será possível alterar o campo dataIngresso. 
+Não será possível alterar a senha.
+O usuário só será alterado caso a senha tenha sido digitada corretamente.
+
 Resposta do servidor
 ```json
 {
@@ -79,9 +84,10 @@ Para excluir um usuário será preciso enviar enviar um JSON no seguinte formato
 ```json
 {
     "id":7,
-    
+    "senha":"123456"
 }
 ```
+Obs: Caso a senha não corresponda, o usuário não será excluído!
 Resposta do servidor
 ```json
 {
@@ -89,6 +95,29 @@ Resposta do servidor
     "mensagem": "Usuário excluído com sucesso!"
 }
 ```
+
+## Verificar SENHA
+Para verificar a senha do usuário você poderá utilizar o seguinte endpoint:
+
+https://backend-bcc-2-b.vercel.app/usuario/verificarSenha
+
+Envie, via método POST, o seguinte JSON:
+```json
+{
+    "nickname":"Professor Renato Gonçalves",
+    "senha":"12346"
+}
+```
+
+Resposta do servidor
+```json
+{
+    "status": true,
+    "senhaCorreta": true,
+    "mensagem": "Senha verificada com sucesso!"
+}
+```
+
 
 Mensagens
 =======
@@ -108,66 +137,66 @@ https://backend-bcc-2-b.vercel.app/mensagem/1 ou https://backend-bcc-2-b.vercel.
     "listaMensagens": [
             {
                 "id": 1,
-                "dataHora": "03/12/2023, 10:40:32",
+                "dataHora": "01/12/2024, 10:40:32",
                 "lida": false,
                 "mensagem": "Que horas começa a prova?",
                 "usuario": {
                     "id": 1,
                     "nickname": "aluno10",
                     "urlAvatar": "https://thumbs.dreamstime.com/z/%C3%ADcone-do-sinal-do-usu%C3%A1rio-s%C3%ADmbolo-da-pessoa-avatar-humano-84527747.jpg?w=768",
-                    "dataIngresso": "03/12/2023",
+                    "dataIngresso": "01/12/2024",
                     "mensagens": []
                     }
             },
             {
                 "id": 2,
-                "dataHora": "03/12/2023, 10:41:03",
+                "dataHora": "01/12/2024, 10:41:03",
                 "lida": false,
                 "mensagem": "Vai começar às 08h20?",
                 "usuario": {
                     "id": 3,
                     "nickname": "passei",
                     "urlAvatar": "https://thumbs.dreamstime.com/z/%C3%ADcone-do-sinal-do-usu%C3%A1rio-s%C3%ADmbolo-da-pessoa-avatar-humano-84519100.jpg?w=2048",
-                    "dataIngresso": "03/12/2023",
+                    "dataIngresso": "01/12/2024",
                     "mensagens": []
                     }
             },
             {
                 "id": 3,
-                "dataHora": "03/12/2023, 11:01:24",
+                "dataHora": "01/12/2024, 11:01:24",
                 "lida": false,
                 "mensagem": "Alguém sabe em qual laboratório?",
                 "usuario": {
                     "id": 2,
                     "nickname": "estudioso",
                     "urlAvatar": "https://thumbs.dreamstime.com/z/%C3%ADcone-do-sinal-do-usu%C3%A1rio-s%C3%ADmbolo-da-pessoa-avatar-humano-84519083.jpg?w=2048",
-                    "dataIngresso": "03/12/2023",
+                    "dataIngresso": "01/12/2024",
                     "mensagens": []
                     }
             },
             {
                 "id": 4,
-                "dataHora": "03/12/2023, 11:31:44",
+                "dataHora": "01/12/2024, 11:31:44",
                 "lida": false,
                 "mensagem": "o professor falou que vai ser no lab 4, aquele do subsolo",
                 "usuario": {
                     "id": 4,
                     "nickname": "jatodeferias",
                     "urlAvatar": "https://thumbs.dreamstime.com/z/%C3%ADcone-do-sinal-do-usu%C3%A1rio-s%C3%ADmbolo-da-pessoa-avatar-humano-84531690.jpg?w=2048",
-                    "dataIngresso": "03/12/2023",
+                    "dataIngresso": "01/12/2024",
                     "mensagens": []
                     }
             },
             {
                 "id": 5,
-                "dataHora": "03/12/2023, 11:32:16",
+                "dataHora": "01/12/2024, 11:32:16",
                 "lida": false,
                 "mensagem": "Alguém sabe se vai cair redux?",
                 "usuario": {
                     "id": 4,
                     "nickname": "jatodeferias",
                     "urlAvatar": "https://thumbs.dreamstime.com/z/%C3%ADcone-do-sinal-do-usu%C3%A1rio-s%C3%ADmbolo-da-pessoa-avatar-humano-84531690.jpg?w=2048",
-                    "dataIngresso": "03/12/2023",
+                    "dataIngresso": "01/12/2024",
                     "mensagens": []
                 }
             }

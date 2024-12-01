@@ -5,11 +5,11 @@ export default async function conectarBanco() {
     }
 
     const pool = mysql.createPool({
-        host: '129.146.68.51',
-        port: 3306,
-        user:'provabcc',
-        password: 'xjYryZYVXPTOCqX5dUwW',
-        database: 'ProvaBCC',
+        host: process.env.IP_BANCO_DE_DADOS,
+        port: process.env.PORTA_BANCO_DE_DADOS,
+        user:process.env.BD_USUARIO,
+        password: process.env.BD_SENHA,
+        database: process.env.BASE_DE_DADOS,
         waitForConnections: true,
         connectionLimit: 10,
         maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
@@ -24,4 +24,5 @@ export default async function conectarBanco() {
 
 export function liberarConexao(conexao) {
     global.poolConexoes.releaseConnection(conexao);
+    conexao.release();
 }
